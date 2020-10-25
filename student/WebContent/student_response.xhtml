@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+	<title>Student Confirmation</title>
+</h:head>
+
+<h:body>
+   	
+
+	    The student is confirmed: #{student.firstName} #{student.lastName}
+	   	<br />
+		<br />
+		
+		Phone Number: #{student.phoneNumber}	    
+	   	<br />
+		<br />	   	
+		
+		Email: #{student.email}	    
+	    <br />
+		<br />
+		
+		The student's country: #{student.country}
+		<br />
+		<br />
+		
+		The student's Gender: #{student.gender}
+		<br />
+		<br />
+		The student's favorite programming languages: 
+		
+		<ul>
+
+			<ui:repeat value="#{student.favoriteLanguages}" var="tempLanguage">
+				<li>#{tempLanguage}</li>
+			</ui:repeat>
+
+		</ul>
+
+		<br />
+		<br />
+		
+		Course Code: #{student.courseCode}
+		
+		<br />
+		<br />
+		
+		Free Passes: #{student.freePasses}
+
+		<br />
+		<br />
+		
+		Postal Code: #{student.postalCode}
+    </h:body>
+</html>
