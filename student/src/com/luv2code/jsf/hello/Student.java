@@ -38,6 +38,12 @@ public class Student {
 		countryOptions.add("United States");
 	}
 
+	public Student(String firstName, String lastName, String email) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+	}
+
 	public String getEmail() {
 		return email;
 	}
