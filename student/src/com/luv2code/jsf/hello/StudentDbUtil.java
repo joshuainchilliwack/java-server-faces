@@ -206,4 +206,50 @@ public class StudentDbUtil {
 			exc.printStackTrace();
 		}
 	}
+
+	public List<Student> searchStudents(String theSearchName) throws Exception {
+
+		List<Student> students = new ArrayList<>();
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+
+			myConn = dataSource.getConnection();
+			if (theSearchName != null && theSearchName.trim().length() > 0) {
+
+				String sql = "select * from student where lower(first_name) like ? or lower(last_name) like ?";
+
+				myStmt = myConn.prepareStatement(sql);
+				String theSearchNameLike = "%" + theSearchName.toLowerCase() + "%";
+				myStmt.setString(1, theSearchNameLike);
+				myStmt.setString(2, theSearchNameLike);
+
+			} else {
+				String sql = "select * from student order by last_name";
+
+				myStmt = myConn.prepareStatement(sql);
+			}
+
+			myRs = myStmt.executeQuery();
+
+			while (myRs.next()) {
+
+				int id = myRs.getInt("id");
+				String firstName = myRs.getString("first_name");
+				String lastName = myRs.getString("last_name");
+				String email = myRs.getString("email");
+
+				Student tempStudent = new Student(id, firstName, lastName, email);
+
+				students.add(tempStudent);
+			}
+
+			return students;
+		} finally {
+			close(myConn, myStmt, myRs);
+		}
+	}
 }

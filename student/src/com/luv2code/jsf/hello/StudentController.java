@@ -19,6 +19,8 @@ public class StudentController {
 	private List<Student> students;
 	private StudentDbUtil studentDbUtil;
 	private Logger logger = Logger.getLogger(getClass().getName());
+	
+	private String theSearchName;
 
 	public StudentController() throws Exception {
 		students = new ArrayList<>();
@@ -37,11 +39,20 @@ public class StudentController {
 		students.clear();
 
 		try {
-			students = studentDbUtil.getStudents();
+		
+			if (theSearchName != null && theSearchName.trim().length() > 0) {
+				students = studentDbUtil.searchStudents(theSearchName);				
+			}
+			else {
+				students = studentDbUtil.getStudents();
+			}
 
 		} catch (Exception exc) {
 			logger.log(Level.SEVERE, "Error loading students", exc);
 			addErrorMessage(exc);
+		}
+		finally {
+			theSearchName = null;
 		}
 	}
 
@@ -122,6 +133,14 @@ public class StudentController {
 	private void addErrorMessage(Exception exc) {
 		FacesMessage message = new FacesMessage("Error: " + exc.getMessage());
 		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	
+	public String getTheSearchName() {
+		return theSearchName;
+	}
+
+	public void setTheSearchName(String theSearchName) {
+		this.theSearchName = theSearchName;
 	}
 
 }
